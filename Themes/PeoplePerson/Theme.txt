@@ -1,0 +1,8 @@
+Name: PeoplePerson
+Author: The Orchard Team
+Website: http://www.orchardproject.net
+Description: Description for the theme
+Version: 1.0
+Zones: Header, Search, Navigation, MainAux, Messages, Content, ContentAside, BiiFirst, BiiSecond, Footer
+# todo: provide tags
+# Tags: Classic, Serif

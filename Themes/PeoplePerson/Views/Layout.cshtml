@@ -1,0 +1,129 @@
+﻿@functions {
+    // To support the layout classifaction below. Implementing as a razor function because we can, could otherwise be a Func<string[], string, string> in the code block following.
+    string CalcuClassify(string[] zoneNames, string classNamePrefix) {
+        var zoneCounter = 0;
+        var zoneNumsFilled = string.Join("", zoneNames.Select(zoneName => { ++zoneCounter; return Model[zoneName] != null ? zoneCounter.ToString() : "";}).ToArray());
+        return HasText(zoneNumsFilled) ? classNamePrefix + zoneNumsFilled : "";
+    }
+}
+@{
+    /* Global includes for the theme
+    ***************************************************************/
+
+    Style.Include("http://fonts.googleapis.com/css?family=Raleway:100");
+    Style.Include("http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:200,300,400,700");
+    Style.Include("http://fonts.googleapis.com/css?family=Droid+Sans");
+    Style.Include("http://fonts.googleapis.com/css?family=Cabin:bold");
+
+    Style.Include("site.css");
+    Script.Require("jQuery").AtHead();
+
+
+    /* Some useful shortcuts or settings
+    ***************************************************************/
+
+    Func<dynamic, dynamic> Zone = x => Display(x); // Zone as an alias for Display to help make it obvious when we're displaying zones
+
+    /* Layout classification based on filled zones
+    ***************************************************************/
+
+    //Add classes to the wrapper div to toggle aside widget zones on and off
+    var asideClass = CalcuClassify(new [] {"AsideFirst", "AsideSecond"}, "aside-"); // for aside-1, aside-2 or aside-12 if any of the aside zones are filled
+    if (HasText(asideClass)) {
+        Model.Classes.Add(asideClass);
+    }
+
+    /* Inserting some ad hoc shapes
+    ***************************************************************/
+
+    WorkContext.Layout.Header.Add(New.Branding(), "5"); // Site name and link to the home page
+    WorkContext.Layout.Footer.Add(New.BadgeOfHonor(), "5"); // Powered by Orchard
+    WorkContext.Layout.Header.Add(New.User(), "10"); // Login and dashboard links
+
+    /* Last bit of code to prep the layout wrapper
+    ***************************************************************/
+    
+    Model.Id = "layout-wrapper";
+    var tag = Tag(Model, "div"); // using Tag so the layout div gets the classes, id and other attributes added to the Model
+}
+@tag.StartElement
+@if (Model.Header != null) {
+<header id="layout-header" class="group">
+    <a name="top" />
+    <div id="header">
+        @Zone(Model.Header)
+    </div>
+</header>
+}
+
+<div id="layout-main-top">
+    <div id="layout-search">
+    @if (Model.Search !=null) {
+        @Zone(Model.Search)
+    }
+    </div>
+    @if (Model.Navigation != null) {
+    <div id="layout-navigation" class="group">
+        @Zone(Model.Navigation)
+    </div>
+    }
+    <div id="layout-main-top-aux">
+    @if (Model.MainAux != null) {
+        @Zone(Model.MainAux)
+    }
+    </div>
+</div>
+
+<div id="layout-main" class="group">
+
+     @Zone(Model.SubPageTitle)
+    
+    <div id="layout-content" class="group">
+        @if (Model.Messages != null) {
+        <div id="messages">
+            @Zone(Model.Messages)
+        </div>
+        }
+        @* the model content for the page is in the Content zone @ the default position (nothing, zero, zilch) *@
+        @if (Model.Content != null && Model.ContentAside != null) {
+        <div id="content" class="group">
+            <div id="content-main">
+                @Zone(Model.Content)
+            </div>
+            <div id="content-aside">
+                @Zone(Model.ContentAside)
+            </div>
+        </div>
+        } else {
+        <div id="content" class="group">
+           @Zone(Model.Content)
+        </div>
+        }
+    </div>
+
+</div>
+
+<div id="layout-bii" class="group">
+    <a href="#top" class="tothetop">to the top</a>
+    @if (Model.BiiFirst != null) {
+    <div id="bii-first">
+        @Zone(Model.BiiFirst)
+    </div>
+    }
+    @if (Model.BiiSecond != null) {
+    <div id="bii-second">
+        @Zone(Model.BiiSecond)
+    </div>
+    }
+</div>
+
+<div id="layout-footer" class="group">
+    <footer id="footer">
+        @if(Model.Footer != null) {
+        <div id="footer-sig" class="group">
+            @Zone(Model.Footer)
+        </div>
+        }
+    </footer>
+</div>
+@tag.EndElement

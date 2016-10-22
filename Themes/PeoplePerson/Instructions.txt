@@ -1,0 +1,22 @@
+﻿**********************************************************
+To enabled a default set of content to start from,
+please follow the steps below to complete the 
+installation of People Person. 
+*********************************************************
+
+1. ADD A SITE DESCRIPTION: Place an HTML Widget into the "default" layer and into the Zone "MainAux" to add a description of your web site for the user to see. Do not enter anything for the "Title". Something along the lines of "A personal site about work, photography and anything else that I find interesting. Enjoy your stay."
+
+2. ADD SITE SHORTCUTS: Place an HTML Widget into the "default" and into the "BiiFirst" Zone. Enter in "Shortcuts" for the widget "Title". Use the following HTML and ensure to paste it in using the "Edit HTML Source" view. Update the links to each one of your social properties. 
+
+<ul class="social">
+	<li><a title="Flickr" href="http://www.flickr.com">flickr</a></li>
+	<li><a title="Facebook" href="http://www.facebook.com">Facebook</a></li>
+	<li><a title="Twitter" href="http://www.twitter.com">twitter</a></li>
+	<li><a title="Linkedin" href="http:/www.facebook.com">linkedin</a></li>
+	<li><a title="Tumblr" href="http://www.tumblr.com">tumblr</a></li>
+	<li><a title="Posterous" href="http://www.posterous.com">posterous</a></li>
+</ul>
+
+3. ADD ABOUT ME: Place an HTML Widget into the "default" layer and into the Zone "BiiSecond" to add a brief description describing who you are. Enter in "About" for the widget "Title"
+
+3. ADD SEARCH: If you want to enable search on People Person, enable Search in Orchard > Settings > Features and place the Search Form widget in the "Search" Zone.
